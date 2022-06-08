@@ -40,6 +40,12 @@ function startPrompt() {
         else if (answer.empData === 'Add a Department') {
             addDepartment(startPrompt);
         }
+        else if (answer.empData === 'Add a Role') {
+            addRole(startPrompt);
+        }
+        else if (answer.empData === 'Add an Employee') {
+            addEmployee(startPrompt);
+        }
     })
 };
 
@@ -88,6 +94,78 @@ function addDepartment() {
     ])
     .then(response => {
         db.query('INSERT INTO department SET ?', { name: response.department }, (err, res) => {
+            if(err) throw err;
+            startPrompt();
+        });
+    })
+};
+
+// query to add a role
+function addRole() {
+    inquirer.prompt([
+        {
+            name: 'title',
+            type: 'input',
+            message: 'Enter the new role:'
+        },
+        {
+            name: 'salary',
+            type: 'input',
+            message: 'Enter the salary:'
+        },
+        {
+            name: 'department_id',
+            type: 'input',
+            message: 'Enter the department ID:'
+        }
+    ])
+    .then(response => {
+        db.query('INSERT INTO role SET ?', 
+        { 
+            title: response.title, 
+            salary: response.salary, 
+            department_id: response.department_id 
+        }, 
+        (err, res) => {
+            if(err) throw err;
+            startPrompt();
+        });
+    })
+};
+
+// query to add a employee
+function addEmployee() {
+    inquirer.prompt([
+        {
+            name: 'first_name',
+            type: 'input',
+            message: 'Enter first name:'
+        },
+        {
+            name: 'last_name',
+            type: 'input',
+            message: 'Enter last name:'
+        },
+        {
+            name: 'role_id',
+            type: 'input',
+            message: 'Enter the roles ID:'
+        },
+        {
+            name: 'manager_id',
+            type: 'input',
+            message: 'Enter the managers ID:'
+        }
+    ])
+    .then(response => {
+        db.query('INSERT INTO employee SET ?', 
+        { 
+            first_name: response.first_name, 
+            last_name: response.last_name, 
+            role_id: response.role_id,
+            manager_id: response.manager_id
+        }, 
+        (err, res) => {
             if(err) throw err;
             startPrompt();
         });
