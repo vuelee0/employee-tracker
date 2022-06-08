@@ -1,9 +1,14 @@
 // const express = require('express');
 const inquirer = require('inquirer');
 const db = require('./db/connection');
+const cTable = require('console.table');
 
-const viewDepartments = require('./utils/view-data')
-
+// Start server after DB connection
+db.connect(err => {
+    if (err) throw err;
+    console.log('Database connected.');
+    startPrompt();
+});
 
 
 function startPrompt() {
@@ -23,17 +28,68 @@ function startPrompt() {
         ]
     })
     .then(function(answer) {
-        if (answer.action === 'View all Departments') {
+        if (answer.empData === 'View all Departments') {
             viewDepartments(startPrompt);
+        }
+        else if (answer.empData === 'View all Roles') {
+            viewRoles(startPrompt);
+        }
+        else if (answer.empData === 'View all Employees') {
+            viewEmployees(startPrompt);
+        }
+        else if (answer.empData === 'Add a Department') {
+            addDepartment(startPrompt);
         }
     })
 };
 
 
 
-// Start server after DB connection
-db.connect(err => {
-    if (err) throw err;
-    console.log('Database connected.');
-    startPrompt();
-});
+
+
+// query to view all department table
+function viewDepartments() {
+    const sql = `SELECT * FROM department`;
+    db.query(sql, (err, res) => {
+        if(err) throw err;
+        console.table(res);
+        startPrompt();
+    });
+};
+
+// query to view all roles table
+function viewRoles() {
+    const sql = `SELECT * FROM role`;
+    db.query(sql, (err, res) => {
+        if(err) throw err;
+        console.table(res);
+        startPrompt();
+    });
+};
+
+// query to view all employees table
+function viewEmployees() {
+    const sql = `SELECT * FROM employee`;
+    db.query(sql, (err, res) => {
+        if(err) throw err;
+        console.table(res);
+        startPrompt();
+    });
+};
+
+// query to add a department
+function addDepartment() {
+    inquirer.prompt([
+        {
+            name: 'department',
+            type: 'input',
+            message: 'Enter the department name:'
+        }
+    ])
+    .then(response => {
+        db.query('INSERT INTO department SET ?', { name: response.department }, (err, res) => {
+            if(err) throw err;
+            startPrompt();
+        });
+    })
+};
