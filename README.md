@@ -23,6 +23,11 @@ For any questions about this project, contact me at:
 - Github: [vuelee0](https://github.com/vuelee0)
 - Email: vuelee09@gmail.com
 
-## Screenshots
 
+## Demo Video Link
+https://drive.google.com/file/d/1I5EQ4yuJFpL8JgzOKNNdbX_mClobBm7d/view
+
+
+## Screenshots
 ![image](./assets/images/employeetrackerSS.png)
+
