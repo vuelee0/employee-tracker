@@ -4,13 +4,12 @@ const cTable = require('console.table');
 
 
 function viewDepartments() {
-    db.query(
-        `SELECT * FROM department`,
-        function(err, results) {
-            if(err) throw err;
-            console.table(results);
-        }
-    );
+    const sql = `SELECT * FROM department`;
+    db.query(sql, (err, res) => {
+        if(err) throw err;
+        console.table(res);
+        startPrompt();
+    });
 };
 
 
