@@ -46,6 +46,10 @@ function startPrompt() {
         else if (answer.empData === 'Add an Employee') {
             addEmployee(startPrompt);
         }
+        // exit the application
+        else if (answer.empData === 'Exit') {
+            db.end();
+        }
     })
 };
 
