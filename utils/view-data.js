@@ -4,8 +4,15 @@ const cTable = require('console.table');
 
 
 function viewDepartments() {
-    const sql = ``;
     db.query(
+        `SELECT * FROM department`,
+        function(err, results) {
+            if(err) throw err;
+            console.table(results);
+        }
+    );
+};
 
-    )
-}
+
+
+module.exports = viewDepartments;
